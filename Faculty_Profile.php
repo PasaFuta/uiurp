@@ -3,7 +3,7 @@
 $imageFolder = "Resources/research_picture/";
 $images = glob($imageFolder . "*.{jpg,png,jpeg,gif}", GLOB_BRACE);
 
-// Start the session (if not already started)
+// Start the session 
 session_start();
 
 // Include the MongoDB PHP library
@@ -14,7 +14,7 @@ $client = new MongoDB\Client("mongodb+srv://uiurp:uiurp12345@uiurp.fluqo.mongodb
 $collection = $client->uiurp->faculties;
 
 // Check if the 'id' parameter is set in the URL
-if (isset($_GET['id'])) { // Corrected from '_id' to 'id'
+if (isset($_GET['id'])) { 
     try {
         // Convert the 'id' parameter to a MongoDB ObjectId
         $faculty_id = new MongoDB\BSON\ObjectId($_GET['id']);
@@ -52,50 +52,72 @@ if (isset($_GET['id'])) { // Corrected from '_id' to 'id'
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faculty Profile - <?= $faculty['name']; ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="Style/faculty_profile.css">
 </head>
 <body>
     <?php include 'navbar.php'; ?>
 
     <!-- Hero Section -->
     <header>
-        <div class="container py-5 text-left">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h1 id="facultyName" style="font-size: 60px;">Hello, I'm <strong><?= $faculty['name']; ?></strong></h1>
-                    <p id="facultyBio"><?= $faculty['bio']; ?></p>
-                    <div class="py-3">
-                        <a href="#" class="btn btn-primary me-2 mb-2">Say Hello!</a>
-                        <a href="#" class="btn btn-primary me-2 mb-2">My Projects</a>
-                        <a href="#" class="btn btn-secondary mb-2">Current Schedule</a>
-                    </div>
+    <div class="container py-5 text-left">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h1 id="facultyName" style="font-size: 60px;">Hello, I'm <strong><?= $faculty['name']; ?></strong></h1>
+                <p id="facultyBio"><?= $faculty['bio']; ?></p>
+                <div class="py-3">
+                    <!-- <a href="#" class="btn btn-primary me-2 mb-2">Say Hello!</a> -->
+                    <a href="#projects" class="btn btn-primary me-2 mb-2">My Projects</a>
+                    <!-- Button to trigger the popup window -->
+                    <button class="btn btn-secondary mb-2" data-bs-toggle="modal" data-bs-target="#scheduleModal">
+                        Current Schedule
+                    </button>
                 </div>
-                <div class="col-md-6">
-                    <div class="d-flex justify-content-end">
-                        <img src="<?= $faculty['profile_image'] ?? 'Resources/imgPlaceholder.png'; ?>" alt="Profile Picture" class="img-fluid rounded" id="facultyImage">
-                    </div>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex justify-content-end">
+                    <img src="<?= $faculty['profile_image'] ?? 'Resources/imgPlaceholder.png'; ?>" alt="Profile Picture" class="img-fluid rounded" id="facultyImage">
                 </div>
             </div>
         </div>
-    </header>
+    </div>
+</header>
+
+<!-- Bootstrap Modal (Popup Window) -->
+<div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="scheduleModalLabel">Current Schedule</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Embed the external website using an iframe -->
+                <iframe src="https://now.nahid.org/" width="100%" height="500px" style="border: none;"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
 
     <!-- Interested Fields Section -->
     <section class="py-5 bg-light">
-        <h2 class="text-center mb-4">Interested Fields</h2>
-        <div class="container p-3 text-center align-items-center">
-            <div class="row text-center align-items-center justify-content-center">
-                <?php foreach ($faculty['interested_fields_of_research'] as $field): ?>
-                    <div class="col-md-3">
-                        <div class="p-3 border rounded">
-                            <h3><?= $field; ?></h3>
-                        </div>
+    <h2 class="text-center mb-4">Interested Fields</h2>
+    <div class="container p-3 text-center align-items-center">
+        <div class="row text-center align-items-center justify-content-center">
+            <?php foreach ($faculty['interested_fields_of_research'] as $field): ?>
+                <div class="col-md-3 mb-4">
+                    <div class="field-box p-4 shadow-sm rounded-lg">
+                        <h3 class="text-secondary"><?= $field; ?></h3>
                     </div>
-                <?php endforeach; ?>
-            </div>
+                </div>
+            <?php endforeach; ?>
         </div>
-    </section>
+    </div>
+</section>
+
 
     <!-- Publications Section -->
-    <section class="container py-5">
+    <section id="projects" class="container py-5">
     <h2 class="text-center mb-4">Publications</h2>
     <div class="row">
         <?php foreach ($faculty['projects'] as $project): ?>
