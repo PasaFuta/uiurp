@@ -7,6 +7,8 @@ $collection = $db->forum;
 
 $data = json_decode(file_get_contents('php://input'), true);
 
+error_log(print_r($data, true)); // Log the received data
+
 if (isset($data['title']) && isset($data['content'])) {
     $post = [
         'title' => $data['title'],
