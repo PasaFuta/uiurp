@@ -6,11 +6,17 @@ $collection = $client->uiurp->faculties;
 
 $faculties = $collection->find([], [
     'projection' => [
+        '_id' => 1,
         'name' => 1,
         'bio' => 1,
         'profile_image' => 1
     ]
 ])->toArray();
+
+// Convert ObjectId to string
+foreach ($faculties as &$faculty) {
+    $faculty['_id'] = (string) $faculty['_id'];
+}
 
 echo json_encode($faculties);
 ?>
