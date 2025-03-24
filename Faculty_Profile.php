@@ -116,27 +116,69 @@ if (isset($_GET['id'])) {
 </section>
 
 
-    <!-- Publications Section -->
-    <section id="projects" class="container py-5">
+<!-- Publications Section -->
+<section id="projects" class="container py-5">
     <h2 class="text-center mb-4">Publications</h2>
     <div class="row">
-        <?php foreach ($faculty['projects'] as $project): ?>
-            <div class="col-md-4 p-3">
-                <div class="card p-3">
-                    <?php 
-                        // Select a random image from the folder
-                        $randomImage = $images[array_rand($images)]; 
-                    ?>
-                    <img src="<?= $randomImage; ?>" class="card-img-top" alt="Project Image" style="width: 100%; height: auto;">
-                    <div class="card-body">
-                        <h5 class="card-title"><?= $project['title']; ?></h5>
-                        <p class="card-text"><?= $project['description']; ?></p>
+        <?php if (!empty($faculty['projects']) && count($faculty['projects']) > 0): ?>
+            <?php foreach ($faculty['projects'] as $project): ?>
+                <div class="col-md-4 p-3">
+                    <div class="card p-3">
+                        <?php 
+                            // Select a random image from the folder
+                            $randomImage = $images[array_rand($images)]; 
+                        ?>
+                        <img src="<?= htmlspecialchars($randomImage); ?>" class="card-img-top" alt="Project Image" style="width: 100%; height: auto;">
+                        <div class="card-body">
+                            <h5 class="card-title"><?= htmlspecialchars($project['title']); ?></h5>
+                            <p class="card-text"><?= htmlspecialchars($project['description']); ?></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p class="text-center">No publications available at the moment.</p>
+        <?php endif; ?>
     </div>
 </section>
+
+
+
+<!-- Prerequisites Section -->
+<section class="prerequisites-section">
+    <h2 class="text-center">Prerequisites</h2>
+    <div class="container text-center">
+        <?php if (!empty($faculty['prerequisites']) && count($faculty['prerequisites']) > 0): ?>
+            <ul>
+                <?php foreach ($faculty['prerequisites'] as $prerequisite): ?>
+                    <li><?= htmlspecialchars($prerequisite); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        <?php else: ?>
+            <p>No prerequisites available at the moment.</p>
+        <?php endif; ?>
+    </div>
+</section>
+
+<!-- Resources to Learn Section -->
+<section class="resources-section">
+    <h2 class="text-center">Resources to Learn Prerequisites</h2>
+    <div class="container text-center">
+        <?php if (!empty($faculty['resources_to_learn_prerequisites']) && count($faculty['resources_to_learn_prerequisites']) > 0): ?>
+            <ul>
+                <?php foreach ($faculty['resources_to_learn_prerequisites'] as $resource): ?>
+                    <li>
+                        <a href="<?= htmlspecialchars($resource['link']); ?>" target="_blank"><?= htmlspecialchars($resource['topic']); ?></a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        <?php else: ?>
+            <p>No resources available at the moment.</p>
+        <?php endif; ?>
+    </div>
+</section>
+
+
 
     <!-- Contact Section -->
     <section class="bg-dark text-light py-5">
