@@ -107,3 +107,52 @@
     text-decoration: underline;
     color: #218838;
 }
+
+
+/* Interested Fields Section Styling */
+
+section.bg-light {
+    background-color: #b0b7be;
+}
+
+.field-box {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.field-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+h2.text-center {
+    font-size: 2rem;
+    color: #a9acaf;
+    font-weight: 700;
+}
+
+h3.text-secondary {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #6c757d;
+}
+
+.container.p-3 {
+    max-width: 1100px;
+}
+
+@media (max-width: 768px) {
+    .field-box {
+        padding: 2rem 1rem;
+    }
+
+    h2.text-center {
+        font-size: 1.75rem;
+    }
+
+    h3.text-secondary {
+        font-size: 1rem;
+    }
+}

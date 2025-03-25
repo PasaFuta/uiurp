@@ -71,6 +71,8 @@ if (isset($_GET['id'])) {
                     <button class="btn btn-secondary mb-2" data-bs-toggle="modal" data-bs-target="#scheduleModal">
                         Current Schedule
                     </button>
+                    <a href="#prerequisite" class="btn btn-primary me-2 mb-2">Prerequisite</a>
+                    <a href="#resource" class="btn btn-primary me-2 mb-2">Learning Resource</a>
                 </div>
             </div>
             <div class="col-md-6">
@@ -145,7 +147,7 @@ if (isset($_GET['id'])) {
 
 
 <!-- Prerequisites Section -->
-<section class="prerequisites-section">
+<section id="prerequisite" class="prerequisites-section">
     <h2 class="text-center">Prerequisites</h2>
     <div class="container text-center">
         <?php if (!empty($faculty['prerequisites']) && count($faculty['prerequisites']) > 0): ?>
@@ -161,7 +163,7 @@ if (isset($_GET['id'])) {
 </section>
 
 <!-- Resources to Learn Section -->
-<section class="resources-section">
+<section id="resource" class="resources-section">
     <h2 class="text-center">Resources to Learn Prerequisites</h2>
     <div class="container text-center">
         <?php if (!empty($faculty['resources_to_learn_prerequisites']) && count($faculty['resources_to_learn_prerequisites']) > 0): ?>
